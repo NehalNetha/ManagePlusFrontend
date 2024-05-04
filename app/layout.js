@@ -1,5 +1,11 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import SidebarMenu from "@/components/SidebarMenu";
+import Navbar from "@/components/Navbar";
+import Provider from "@/components/Provider";
+import ProtectRoute from "@/components/ProtectedRoute";
+import { useRouter } from "next/navigation"; // Import useRouter from next/navigation
+import { useSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,9 +15,33 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // const [session, loading] = useSession(); // Get session and loading status
+
+  // const router = useRouter();
+
+  // useEffect(() => {
+  //   // Check authentication status here
+  //   if (!loading && !session) {
+  //     // If not authenticated and session is not loading
+  //     router.push("/signin"); // Redirect to sign-in page
+  //   }
+  // }, [loading, session, router]);
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="flex flex-row"> 
+          <SidebarMenu />
+            <div className="w-full flex flex-col gap-3 ">
+              <Provider>
+              <Navbar />
+                  
+                    {children}
+
+            </Provider>
+            </div>
+        </div>
+        </body>
     </html>
   );
 }
